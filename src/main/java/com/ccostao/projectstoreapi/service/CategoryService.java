@@ -1,0 +1,28 @@
+package com.ccostao.projectstoreapi.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ccostao.projectstoreapi.domain.Category;
+import com.ccostao.projectstoreapi.repository.CategoryRepository;
+
+@Service
+public class CategoryService {
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	public List<Category> findAll() {
+		List<Category> category = categoryRepository.findAll();
+		return category;
+	}
+	
+	public Category find(Integer id) {
+		Optional<Category> category = categoryRepository.findById(id);
+		return category.orElse(null);
+	}
+	
+}
