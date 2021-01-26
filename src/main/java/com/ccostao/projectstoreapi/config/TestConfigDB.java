@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.ccostao.projectstoreapi.domain.Address;
 import com.ccostao.projectstoreapi.domain.Category;
 import com.ccostao.projectstoreapi.domain.City;
+import com.ccostao.projectstoreapi.domain.Client;
 import com.ccostao.projectstoreapi.domain.Product;
 import com.ccostao.projectstoreapi.domain.State;
+import com.ccostao.projectstoreapi.domain.enums.ClientType;
+import com.ccostao.projectstoreapi.repository.AddressRepository;
 import com.ccostao.projectstoreapi.repository.CategoryRepository;
 import com.ccostao.projectstoreapi.repository.CityRepository;
+import com.ccostao.projectstoreapi.repository.ClientRepository;
 import com.ccostao.projectstoreapi.repository.ProductRepository;
 import com.ccostao.projectstoreapi.repository.StateRepository;
 
@@ -31,6 +36,12 @@ public class TestConfigDB implements CommandLineRunner{
 	
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -65,6 +76,18 @@ public class TestConfigDB implements CommandLineRunner{
 		
 		stateRepository.saveAll(Arrays.asList(state,state2));
 		cityRepository.saveAll(Arrays.asList(city,city2,city3));
+		
+		Client cli = new Client(null, "Maria Silva", "maria@gmail.com", "32165498777", ClientType.NATURALPERSON);
+		cli.getPhones().addAll(Arrays.asList("321654987", "987654321"));
+		
+		Address e1 = new Address(null, "Rua Estudante", "300", "Apt 303", "Bancários", "589646", cli, city);
+		Address e2 = new Address(null, "Rua das Colinas", "277", "Casa 107", "Hill", "365549788", cli, city2);
+		
+		cli.getAdresses().addAll(Arrays.asList(e1,e2));
+		
+		clientRepository.saveAll(Arrays.asList(cli));
+		addressRepository.saveAll(Arrays.asList(e1, e2));
+		 
 	}
 	
 }
