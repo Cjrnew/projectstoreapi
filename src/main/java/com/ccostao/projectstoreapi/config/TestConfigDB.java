@@ -1,5 +1,6 @@
 package com.ccostao.projectstoreapi.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.ccostao.projectstoreapi.domain.Address;
 import com.ccostao.projectstoreapi.domain.Category;
 import com.ccostao.projectstoreapi.domain.City;
 import com.ccostao.projectstoreapi.domain.Client;
+import com.ccostao.projectstoreapi.domain.Order;
+import com.ccostao.projectstoreapi.domain.Payment;
+import com.ccostao.projectstoreapi.domain.PaymentBoleto;
+import com.ccostao.projectstoreapi.domain.PaymentCreditCard;
 import com.ccostao.projectstoreapi.domain.Product;
 import com.ccostao.projectstoreapi.domain.State;
 import com.ccostao.projectstoreapi.domain.enums.ClientType;
+import com.ccostao.projectstoreapi.domain.enums.PaymentStatus;
 import com.ccostao.projectstoreapi.repository.AddressRepository;
 import com.ccostao.projectstoreapi.repository.CategoryRepository;
 import com.ccostao.projectstoreapi.repository.CityRepository;
 import com.ccostao.projectstoreapi.repository.ClientRepository;
+import com.ccostao.projectstoreapi.repository.OrderRepository;
+import com.ccostao.projectstoreapi.repository.PaymentRepository;
 import com.ccostao.projectstoreapi.repository.ProductRepository;
 import com.ccostao.projectstoreapi.repository.StateRepository;
 
@@ -42,6 +50,12 @@ public class TestConfigDB implements CommandLineRunner{
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -87,6 +101,22 @@ public class TestConfigDB implements CommandLineRunner{
 		
 		clientRepository.saveAll(Arrays.asList(cli));
 		addressRepository.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Order ped1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli, e1);
+		Order ped2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli, e2);
+
+		Payment pagto1 = new PaymentCreditCard(null, PaymentStatus.PAID, ped1, 6);
+		ped1.setPayment(pagto1);
+
+		Payment pagto2 = new PaymentBoleto(null, PaymentStatus.PENDING, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pagto2);
+
+		cli.getOrders().addAll(Arrays.asList(ped1, ped2));
+
+		orderRepository.saveAll(Arrays.asList(ped1, ped2));
+		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		 
 	}
 	
