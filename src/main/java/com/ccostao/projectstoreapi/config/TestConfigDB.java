@@ -13,6 +13,7 @@ import com.ccostao.projectstoreapi.domain.Category;
 import com.ccostao.projectstoreapi.domain.City;
 import com.ccostao.projectstoreapi.domain.Client;
 import com.ccostao.projectstoreapi.domain.Order;
+import com.ccostao.projectstoreapi.domain.OrderItem;
 import com.ccostao.projectstoreapi.domain.Payment;
 import com.ccostao.projectstoreapi.domain.PaymentBoleto;
 import com.ccostao.projectstoreapi.domain.PaymentCreditCard;
@@ -24,6 +25,7 @@ import com.ccostao.projectstoreapi.repository.AddressRepository;
 import com.ccostao.projectstoreapi.repository.CategoryRepository;
 import com.ccostao.projectstoreapi.repository.CityRepository;
 import com.ccostao.projectstoreapi.repository.ClientRepository;
+import com.ccostao.projectstoreapi.repository.OrderItemRepository;
 import com.ccostao.projectstoreapi.repository.OrderRepository;
 import com.ccostao.projectstoreapi.repository.PaymentRepository;
 import com.ccostao.projectstoreapi.repository.ProductRepository;
@@ -56,6 +58,9 @@ public class TestConfigDB implements CommandLineRunner{
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -117,7 +122,19 @@ public class TestConfigDB implements CommandLineRunner{
 
 		orderRepository.saveAll(Arrays.asList(ped1, ped2));
 		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
-		 
+		
+		OrderItem ip1 = new OrderItem(ped1, product, 0.00, 1, 2000.00);
+		OrderItem ip2 = new OrderItem(ped1, product3, 0.00, 2, 80.00);
+		OrderItem ip3 = new OrderItem(ped2, product2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		product.getItens().addAll(Arrays.asList(ip1));
+		product2.getItens().addAll(Arrays.asList(ip3));
+		product3.getItens().addAll(Arrays.asList(ip2));
+
+		orderItemRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 	
 }
