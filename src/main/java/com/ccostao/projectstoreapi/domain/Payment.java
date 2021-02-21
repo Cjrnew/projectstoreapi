@@ -11,7 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.ccostao.projectstoreapi.domain.enums.PaymentStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -24,7 +24,7 @@ public abstract class Payment implements Serializable{
 	
 	private Integer status;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="order_id")
 	@MapsId
