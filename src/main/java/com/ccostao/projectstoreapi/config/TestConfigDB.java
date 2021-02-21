@@ -65,41 +65,47 @@ public class TestConfigDB implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Category category = new Category(null, "Informática");
+		Category category1 = new Category(null, "Informática");
 		Category category2 = new Category(null, "Escritório");
+		Category category3 = new Category(null, "Cama mesa e banho");
+		Category category4 = new Category(null, "Eletrônicos");
+		Category category5 = new Category(null, "Jardinagem");
+		Category category6 = new Category(null, "Decoração");
+		Category category7 = new Category(null, "Perfumaria");
 		
-		categoryRepository.saveAll(Arrays.asList(category, category2));
+		categoryRepository.saveAll(Arrays.asList(
+				category1, category2, category3, category4, category5, category6, category7));
 		
-		Product product = new Product(null, "Notebook", 2000.0);
+		Product product1 = new Product(null, "Notebook", 2000.0);
 		Product product2 = new Product(null, "Impressora", 800.0);
 		Product product3 = new Product(null, "Mouse", 80.0);
 		
-		category.getProducts().addAll(Arrays.asList(product, product2, product3));
+		category1.getProducts().addAll(Arrays.asList(product1, product2, product3));
 		category2.getProducts().addAll(Arrays.asList(product2));
 		
-		product.getCategories().addAll(Arrays.asList(category));
-		product2.getCategories().addAll(Arrays.asList(category,category2));
-		product3.getCategories().addAll(Arrays.asList(category));
+		product1.getCategories().addAll(Arrays.asList(category1));
+		product2.getCategories().addAll(Arrays.asList(category1,category2));
+		product3.getCategories().addAll(Arrays.asList(category1));
 		
-		productRepository.saveAll(Arrays.asList(product, product2, product3));
+		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 		
-		State state = new State(null, "Paraíba");
+		State state1 = new State(null, "Paraíba");
 		State state2 = new State(null, "Pernambuco");
 		
-		City city = new City(null, "João Pessoa", state);
-		City city2 = new City(null, "Campina Grande", state);
+		City city1 = new City(null, "João Pessoa", state1);
+		City city2 = new City(null, "Campina Grande", state1);
 		City city3 = new City(null, "Recife", state2);
 		
-		state.getCities().addAll(Arrays.asList(city,city2));
+		state1.getCities().addAll(Arrays.asList(city1,city2));
 		state2.getCities().addAll(Arrays.asList(city3));
 		
-		stateRepository.saveAll(Arrays.asList(state,state2));
-		cityRepository.saveAll(Arrays.asList(city,city2,city3));
+		stateRepository.saveAll(Arrays.asList(state1,state2));
+		cityRepository.saveAll(Arrays.asList(city1,city2,city3));
 		
 		Client cli = new Client(null, "Maria Silva", "maria@gmail.com", "32165498777", ClientType.NATURALPERSON);
 		cli.getPhones().addAll(Arrays.asList("321654987", "987654321"));
 		
-		Address e1 = new Address(null, "Rua Estudante", "300", "Apt 303", "Bancários", "589646", cli, city);
+		Address e1 = new Address(null, "Rua Estudante", "300", "Apt 303", "Bancários", "589646", cli, city1);
 		Address e2 = new Address(null, "Rua das Colinas", "277", "Casa 107", "Hill", "365549788", cli, city2);
 		
 		cli.getAdresses().addAll(Arrays.asList(e1,e2));
@@ -123,14 +129,14 @@ public class TestConfigDB implements CommandLineRunner{
 		orderRepository.saveAll(Arrays.asList(ped1, ped2));
 		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
-		OrderItem ip1 = new OrderItem(ped1, product, 0.00, 1, 2000.00);
+		OrderItem ip1 = new OrderItem(ped1, product1, 0.00, 1, 2000.00);
 		OrderItem ip2 = new OrderItem(ped1, product3, 0.00, 2, 80.00);
 		OrderItem ip3 = new OrderItem(ped2, product2, 100.00, 1, 800.00);
 
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
 
-		product.getItens().addAll(Arrays.asList(ip1));
+		product1.getItens().addAll(Arrays.asList(ip1));
 		product2.getItens().addAll(Arrays.asList(ip3));
 		product3.getItens().addAll(Arrays.asList(ip2));
 
