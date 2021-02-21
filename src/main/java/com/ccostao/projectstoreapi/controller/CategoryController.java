@@ -2,6 +2,7 @@ package com.ccostao.projectstoreapi.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ccostao.projectstoreapi.domain.Category;
+import com.ccostao.projectstoreapi.domain.dto.CategoryDTO;
 import com.ccostao.projectstoreapi.service.CategoryService;
 
 @RestController
@@ -26,9 +28,10 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> categoryList() {
-		List<Category> category = categoryService.findAll();
-		return ResponseEntity.ok().body(category);
+	public ResponseEntity<List<CategoryDTO>> findAll() {
+		List<Category> list = categoryService.findAll();
+		List<CategoryDTO> listDTO = list.stream().map(category -> new CategoryDTO(category)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@GetMapping(value="/{id}")
