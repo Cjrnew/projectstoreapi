@@ -1,19 +1,39 @@
 package com.ccostao.projectstoreapi.domain.dto;
 
-public class ClientNewDTO {
-		
-	private String name;
-	private String email;
-	private String cpfOrCnpj;
-	private Integer type;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
+public class ClientNewDTO {
+	
+	@NotEmpty(message="Required field.")
+	@Length(min= 5, max=80, message="The length must be between 5 and 80 characters.")
+	private String name;
+	
+	@NotEmpty(message="Required field.")
+	@Email(message="Invalid e-mail.")
+	private String email;
+	
+	@NotEmpty(message="Required field.")
+	private String cpfOrCnpj;
+	
+	private Integer type;
+	
+	@NotEmpty(message="Required field.")
 	private String street;
+	@NotEmpty(message="Required field.")
 	private String number;
+	
 	private String complement;
 	private String district;
+	
+	@NotEmpty(message="Required field.")
 	private String zipcode;
-
+	
+	@NotEmpty(message="Required field.")
 	private String phone1;
+	
 	private String phone2;
 	private String phone3;
 
