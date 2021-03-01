@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = ClientInsertValidator.class)
+@Constraint(validatedBy = ClientUpdateValidator.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ClientInsert {
+public @interface ClientUpdate {
 	
 	String message() default "Validation error.";
 
