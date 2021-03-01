@@ -23,7 +23,7 @@ public class CategoryDTO implements Serializable{
 	
 	public CategoryDTO(Category category) {
 		id = category.getId();
-		name = category.getname();
+		name = category.getName();
 	}
 
 	public Integer getId() {

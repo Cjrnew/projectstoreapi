@@ -36,11 +36,16 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 
-	public Category update(Category category) {
-		find(category.getId());
-		return categoryRepository.save(category);
+	public Category update(Category obj) {
+		Category newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return categoryRepository.save(newObj);
 	}
 	
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
+	}
+
 	public void delete(Integer id) {
 		find(id);
 		try {
