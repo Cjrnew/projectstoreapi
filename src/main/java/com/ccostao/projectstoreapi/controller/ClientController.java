@@ -26,12 +26,6 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Client>> clientList() {
-		List<Client> client = clientService.findAll();
-		return ResponseEntity.ok().body(client);
-	}
-	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Client> findById(@PathVariable Integer id) {
 		Client client = clientService.find(id);
