@@ -3,8 +3,10 @@ package com.ccostao.projectstoreapi.domain;
 import javax.persistence.Entity;
 
 import com.ccostao.projectstoreapi.domain.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("paymentWithCreditCard")
 public class PaymentCreditCard extends Payment {
 	
 	private static final long serialVersionUID = 1L;
